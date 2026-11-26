@@ -1,12 +1,28 @@
 import { action, makeObservable, observable } from 'mobx';
 import { isTouchDevice } from '@/components/shared/utils/screen/responsive';
 
+/**
+ * The initial dark-mode state. An explicit stored `theme` (set once the user
+ * toggles) always wins; with no stored choice we follow the OS preference
+ * (`prefers-color-scheme`) so the app defaults to the user's system theme
+ * rather than forcing light.
+ */
+function getInitialDarkMode(): boolean {
+    const stored = localStorage.getItem('theme');
+    if (stored === 'dark') return true;
+    if (stored === 'light') return false;
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+        return false;
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)')?.matches ?? false;
+}
+
 export default class UiStore {
     is_mobile = true;
     is_desktop = true;
     is_tablet = false;
     is_chart_layout_default = true;
-    is_dark_mode_on = localStorage.getItem('theme') === 'dark';
+    is_dark_mode_on = getInitialDarkMode();
     account_switcher_disabled_message = '';
     current_focus = null;
     show_prompt = false;

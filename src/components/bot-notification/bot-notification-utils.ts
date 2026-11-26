@@ -1,12 +1,8 @@
-import { toast, ToastPosition, TypeOptions } from 'react-toastify';
+import { ToastPosition, TypeOptions } from 'react-toastify';
 import { isDbotRTL } from '@/external/bot-skeleton/utils/workspace';
 import { localize } from '@deriv-com/translations';
 
-const getToastPosition = () => {
-    const is_RTL = isDbotRTL();
-    if (is_RTL) return toast.POSITION.BOTTOM_RIGHT;
-    return toast.POSITION.BOTTOM_LEFT;
-};
+const getToastPosition = (): ToastPosition => (isDbotRTL() ? 'bottom-right' : 'bottom-left');
 
 export type TNotificationContent = {
     message: string;
@@ -28,7 +24,7 @@ export type TNotificationStyle = {
     pauseOnHover: boolean;
     pauseOnFocusLoss: boolean;
     closeButton: boolean;
-    className?: string;
+    className: string;
 };
 
 export enum NOTIFICATION_TYPE {
@@ -48,12 +44,14 @@ export const notification_message = () => ({
     xml_import_error: localize('Unsupported file format. Please import a valid XML file.'),
 });
 
-export const notification_style = {
-    type: toast.TYPE.DEFAULT,
+export const getNotificationStyle = (): TNotificationStyle => ({
+    type: 'default',
     position: getToastPosition(),
     autoClose: 6000,
     hideProgressBar: true,
     closeOnClick: false,
     pauseOnHover: true,
     pauseOnFocusLoss: false,
-};
+    closeButton: true,
+    className: '',
+});

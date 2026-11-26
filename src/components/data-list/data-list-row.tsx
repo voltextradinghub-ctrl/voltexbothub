@@ -1,7 +1,7 @@
 // @ts-nocheck — vendored bot code with known upstream type gaps; see AGENTS.md
 import React from 'react';
 import classNames from 'classnames';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router';
 import { useIsMounted } from 'usehooks-ts';
 import { useDebounce } from '@/hooks/useDebounce';
 import { clickAndKeyEventHandler } from '../shared';
@@ -75,12 +75,8 @@ const DataListRow = ({
                 <NavLink
                     className='data-list__item--wrapper'
                     id={`dt_reports_contract_${row_key}`}
-                    to={{
-                        pathname: destination_link,
-                        state: {
-                            from_table_row: true,
-                        },
-                    }}
+                    to={destination_link}
+                    state={{ from_table_row: true }}
                 >
                     <div className='data-list__item'>{rowRenderer({ measure, ...other_props })}</div>
                 </NavLink>

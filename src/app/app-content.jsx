@@ -23,7 +23,6 @@ import BotStopped from '../components/bot-stopped';
 import BotBuilder from '../pages/bot-builder';
 import Main from '../pages/main';
 import './app.scss';
-import 'react-toastify/dist/ReactToastify.css';
 import '../components/bot-notification/bot-notification.scss';
 
 // App Builder live-preview branding listener. Mounted only in the preview deployment
@@ -185,7 +184,7 @@ const AppContent = observer(() => {
         <React.Fragment>
             {PreviewBranding && (
                 <Suspense fallback={null}>
-                    <PreviewBranding />
+                    <PreviewBranding uiReady={!is_loading} />
                 </Suspense>
             )}
             {is_loading ? (
